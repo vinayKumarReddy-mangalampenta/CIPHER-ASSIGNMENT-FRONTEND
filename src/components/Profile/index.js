@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { AiFillLinkedin } from 'react-icons/ai'
+import { AiFillEye, AiFillLinkedin } from 'react-icons/ai'
 import { BsGlobe, BsInstagram, BsTwitter, BsFacebook, BsGithub } from "react-icons/bs"
+import { toast } from "react-toastify"
 import Navbar from '../Navbar'
 import axios from 'axios'
 import Cookies from 'js-cookie'
@@ -8,6 +9,7 @@ import "./index.css"
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useParams } from 'react-router-dom'
 const API_STATUSES = {
     initial: "INITIAL",
     success: "SUCCESS",
@@ -16,16 +18,29 @@ const API_STATUSES = {
 }
 
 
-const Profile = () => {
+const Profile = (props) => {
     const [apiStatus, setApiStatus] = useState(API_STATUSES.initial)
     const [profile, setProfile] = useState({})
     const [followersCount, setFollowersCount] = useState(0)
+    const [changePassword, setChangePassword] = useState(false)
+    const [currentPassword, setCurrentPassword] = useState("")
+    const [newPassword, setNewPassword] = useState("")
+    const [confirmPassword, setConfirmPassword] = useState("")
 
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+    const [showCurrentPassword, setShowCurrentPassword] = useState(false)
+    const [showNewPassword, setShowNewPassword] = useState(false)
+    const [changingPassword, setChangingPassword] = useState(false)
+
+    const params = useParams()
     const fetchUserData = async () => {
         setApiStatus(API_STATUSES.loading)
         try {
             const accessToken = Cookies.get("access-token")
-            const response = await axios.get("http://localhost:8080/profile", {
+            const username = Cookies.get("username")
+
+            let user = params.user || username
+            const response = await axios.get(`${process.env.API_URL}/profile/${user}`, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }
@@ -45,8 +60,53 @@ const Profile = () => {
 
     useEffect(() => {
         fetchUserData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    const onChangePassword = async (e) => {
+        e.preventDefault()
+        const accessToken = Cookies.get("access-token")
+        setChangingPassword(true)
+        try {
+            await axios.put(`${process.env.API_URL}/auth/change-password`,
+                {
+                    currentPassword,
+                    newPassword,
+                    confirmPassword
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`
+                    }
+                })
+
+            toast.success("password changed successfully", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored"
+            });
+            setChangePassword(false)
+        } catch (error) {
+            console.log(error)
+            toast.error(error.response.data, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored"
+            });
+        }
+        setChangingPassword(false)
+
+    }
 
     const displayLoadingView = () => (
         <div >
@@ -56,11 +116,65 @@ const Profile = () => {
 
     const displayFailureView = () => (
         <div >
-            unable to display your profile please try again later
+            <h1 >unable to display profile please try again later</h1>
         </div>
     )
 
+    const displayPasswordField = () => {
+        return (
+            <div  >
+                <div className='d-flex flex-row justify-content-between'>
+                    <h1 className='profile-headings'>Password & Security</h1>
+                    <button className='btn btn-outline btn-danger' onClick={() => { setChangePassword(!changePassword) }}>{changePassword ? "cancel" : "change"}</button>
+                </div>
+                <div className='container' >
+                    <div className="row ">
+                        {changePassword ?
+                            <form onSubmit={onChangePassword}>
+                                <h5 className='social-media-name'>current password</h5>
+                                <div className='social-media-links-container'>
+                                    <input required type={showCurrentPassword ? "text" : 'password'} placeholder='current password' value={currentPassword} onChange={(e) => { setCurrentPassword(e.target.value) }} />
+                                    <button type='button' onClick={() => { setShowCurrentPassword(!showCurrentPassword) }} className='eye-button'>
+                                        <AiFillEye />
+                                    </button>
+                                </div>
+                                <h5 className='social-media-name'>new password</h5>
+                                <div className='social-media-links-container'>
+                                    <input required type={showNewPassword ? "text" : 'password'} placeholder='new password' value={newPassword} onChange={(e) => { setNewPassword(e.target.value) }} />
+                                    <button type='button' onClick={() => { setShowNewPassword(!showNewPassword) }} className='eye-button'>
+                                        <AiFillEye />
+                                    </button>
+                                </div>
+                                <h5 className='social-media-name'>confirm password</h5>
+                                <div className='social-media-links-container'>
+                                    <input required type={showConfirmPassword ? "text" : 'password'} placeholder='confirm password' value={confirmPassword} onChange={(e) => { setConfirmPassword(e.target.value) }} />
+                                    <button type='button' onClick={() => { setShowConfirmPassword(!showConfirmPassword) }} className='eye-button'>
+                                        <AiFillEye />
+                                    </button>
+                                </div>
+
+                                <button type='submit' disabled={changingPassword} className='btn btn-success' >save</button>
+                            </form>
+
+                            :
+                            <div className="col-12">
+                                <h5 className='social-media-name'>password</h5>
+                                <div className='social-media-links-container'>
+                                    <span >
+                                        ●●●●●●●●●●●
+                                    </span>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
     const displayProfileView = () => {
+        const currUsername = Cookies.get("username")
         const { username, firstName, lastName, email, aboutMe, linkedIn, github, facebook, twitter, website, instagram, currentPosition, highestEducation } = profile
         return (
             <div className='profile-container' >
@@ -78,7 +192,15 @@ const Profile = () => {
                 <div className='px-3 mt-3 d-flex flex-column gap-3' >
                     {/* About me */}
                     <div >
-                        <h1 className='profile-headings' >ABOUT ME</h1>
+                        <div className='d-flex justify-between'>
+                            <h1 className='profile-headings' >ABOUT ME</h1>
+
+                            {currUsername === username && <a className='ms-auto' style={{ textDecoration: "none", color: "orange" }} href='/update-profile' >
+                                <h5  >
+                                    Edit
+                                </h5>
+                            </a>}
+                        </div>
                         <div className='about-me-container' >
                             <p >{aboutMe === "" ? "write about your self .....!" : aboutMe}</p>
                         </div>
@@ -185,28 +307,9 @@ const Profile = () => {
 
                     <hr className='hr' />
 
-                    <div  >
-                        <h1 className='profile-headings'>Password & Security</h1>
-                        <div className='container' >
-                            <div className="row ">
-                                <div className="col-12">
-                                    <h5 className='social-media-name'>password</h5>
-                                    <div className='social-media-links-container'>
-                                        <span >
-                                            ●●●●●●●●●●●
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {currUsername === username && displayPasswordField()}
 
-                    <hr className='hr' />
 
-                    <div  >
-                        <h1 className='profile-headings'>Interests</h1>
-                        {/* // TODO: need to add interests */}
-                    </div>
 
                 </div>
             </div>
@@ -227,6 +330,8 @@ const Profile = () => {
                 return displayLoadingView()
         }
     }
+
+
 
     return (
         <div>

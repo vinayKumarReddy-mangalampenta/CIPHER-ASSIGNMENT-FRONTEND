@@ -23,7 +23,7 @@ const Register = () => {
         e.preventDefault()
         setSubmitting(true)
         try {
-            await axios.post("http://localhost:8080/Auth/register",
+            await axios.post(`${process.env.API_URL}/Auth/register`,
                 {
                     password,
                     email,

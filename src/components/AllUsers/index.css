@@ -1,0 +1,69 @@
+.users-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* justify-content: center; */
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+    list-style-type: none;
+}
+
+.user-card {
+    background-color: #262c36;
+    height: 300px;
+    width: 300px;
+    border-radius: 10px;
+    padding: 5px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-profile-photo {
+    width: 50%;
+    height: auto;
+    border-radius: 100%;
+}
+
+.username {
+    color: white;
+    text-transform: capitalize;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 95%;
+    text-align: center;
+}
+
+.user-email {
+    color: #ffa600;
+}
+
+.user-follow-button {
+    margin-top: auto;
+    height: 40px;
+    width: 100%;
+    border: none;
+
+    margin-bottom: -5px;
+    border-bottom-left-radius: 10px;
+    font-weight: bold;
+    font-size: 18px;
+    border-bottom-right-radius: 10px;
+}
+
+.unfollow-btn {
+    background-color: #ffa600;
+}
+
+.follow-btn {
+    background-color: rgb(9, 148, 9);
+}
+
+.user-contact {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-top: 3px;
+}

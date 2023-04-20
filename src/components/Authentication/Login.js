@@ -21,7 +21,7 @@ const Login = () => {
         e.preventDefault()
         setSubmitting(true)
         try {
-            const response = await axios.post("http://localhost:8080/Auth/login",
+            const response = await axios.post(`${process.env.API_URL}/Auth/login`,
                 {
                     password,
                     email,

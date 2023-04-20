@@ -48,6 +48,21 @@
     margin-bottom: 10px;
 }
 
+.social-media-links-container>input {
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+    outline: none;
+    border: none;
+    color: white;
+}
+
+.eye-button {
+    background-color: transparent;
+    outline: none;
+    border: none;
+}
+
 .hr {
     border-color: #7692c4;
     height: 6px;

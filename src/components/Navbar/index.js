@@ -25,7 +25,9 @@ const Navbar = () => {
             {
                 isCookieAvailable ?
                     <div >
-                        <span >{username}</span>
+                        <a href='/' className='me-2 text-decoration-none'>{username}</a>
+                        <a href="users/all" className='logout-button' >All Users</a>
+
                         <button onClick={logoutUser} className='logout-button'> logout</button>
                     </div> :
 
