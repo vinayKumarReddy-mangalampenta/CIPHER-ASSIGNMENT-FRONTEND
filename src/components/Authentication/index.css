@@ -1,0 +1,167 @@
+.login-container {
+    width: 100%;
+    min-height: 100vh;
+    height: 100%;
+    background-color: #f2f5fa;
+    padding: 0 0 30px 0;
+}
+
+
+.auth-container {
+    max-width: 700px;
+    width: 97%;
+    background-color: #262c36;
+    border-radius: 10px;
+    margin: auto;
+    padding: 12px 10px;
+    color: white;
+    /* box-shadow: 0px 5px 7px 0px #262c36; */
+    box-shadow: 0 0 15px #ffffff33;
+
+}
+
+.auth-form {
+    max-width: 70%;
+    align-self: center;
+}
+
+.auth-logo {
+    height: 40px;
+    width: auto;
+}
+
+.auth-welcome {
+    color: #dfe0e1;
+}
+
+.auth-hint {
+
+    color: #c9cacd;
+    font-size: 18px;
+    display: block;
+}
+
+.auth-input-container {
+    background-color: #15181e;
+    width: 100%;
+    border-radius: 8px;
+    height: 42px;
+    margin: 10px 0;
+    padding: 0 5px;
+}
+
+.auth-input-field {
+    background: transparent;
+    border-radius: inherit;
+    width: 100%;
+    height: inherit;
+    border: 0;
+    outline: none;
+    font-weight: 600;
+    font-size: 19px;
+    color: #ffffff !important;
+}
+
+/* .auth-input-field:invalid {
+    animation: shake 300ms;
+    color: red;
+}
+
+@keyframes shake {
+    25% {
+        transform: translateX(4px);
+    }
+
+    50% {
+        transform: translate(-4px);
+    }
+
+    75% {
+        transform: translate(4px);
+    }
+
+} */
+
+.auth-forgot-password {
+    color: #a86c31;
+    font-weight: 500;
+    font-size: 19px;
+}
+
+.auth-submit-button {
+    background: #f3912e;
+    height: 45px;
+    color: #ffffff;
+    font-size: 19px;
+    font-weight: 500;
+    outline: none !important;
+    border: 0;
+}
+
+.auth-submit-button:disabled {
+    opacity: 0.5;
+}
+
+.get-started {
+    color: #f3912e;
+    text-decoration: none;
+}
+
+.get-started:hover {
+    color: #f3912e;
+}
+
+.auth-separator {
+    border: 1px solid #4d525a;
+    display: flex;
+    height: 1px;
+    margin: 20px auto 25px;
+    width: 70%;
+}
+
+.auth-separator>span {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    background-color: #262c36;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    height: auto;
+    line-height: 18px;
+    margin: -10px auto;
+    width: 30px;
+}
+
+.google-login-button {
+    /* border: 1px solid #4d525a; */
+    padding: 5px 10px;
+    outline: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    margin: 20px auto 25px;
+    width: 70%;
+    height: 40px;
+    border-radius: 6px;
+}
+
+.google-login-button>span {
+    margin: auto;
+
+}
+
+.google-logo {
+    width: auto;
+    height: 80%;
+}
+
+/* to remove autofill input color */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    color: #ffffff !important;
+    transition: background-color 5000s ease-in-out 0s;
+}

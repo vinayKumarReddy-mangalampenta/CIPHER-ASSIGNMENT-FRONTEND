@@ -1,0 +1,54 @@
+.user-dp {
+    border-radius: 100%;
+    height: 60px;
+    width: auto;
+}
+
+.intro-container {
+    background-color: aqua;
+}
+
+.profile-container {
+    background-color: #15181e;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.about-me-container {
+    background: #262c36;
+    font-size: 20px;
+    color: #a4c0cd;
+    padding: 10px;
+    border-radius: 10px;
+    min-height: 150px;
+}
+
+.profile-headings {
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.social-media-name {
+    color: white;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.social-media-links-container {
+    background: #262c36;
+    font-size: 20px;
+    color: #a4c0cd;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 10px;
+}
+
+.hr {
+    border-color: #7692c4;
+    height: 6px;
+}
