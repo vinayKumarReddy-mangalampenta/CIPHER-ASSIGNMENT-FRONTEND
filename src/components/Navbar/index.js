@@ -6,7 +6,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
     const isCookieAvailable = Cookies.get("access-token")
-    const username = Cookies.get("username")
+    // const username = Cookies.get("username")
     const navigate = useNavigate()
 
     const logoutUser = () => {
