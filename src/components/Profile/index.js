@@ -4,7 +4,8 @@ import { BsGlobe, BsInstagram, BsTwitter, BsFacebook, BsGithub } from "react-ico
 import { toast } from "react-toastify"
 import Navbar from '../Navbar'
 import axios from 'axios'
-
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 import MoonLoader from "react-spinners/MoonLoader"
 import Cookies from 'js-cookie'
 import "./index.css"
@@ -24,6 +25,7 @@ const Profile = (props) => {
     const [apiStatus, setApiStatus] = useState(API_STATUSES.initial)
     const [profile, setProfile] = useState({})
     const [followersCount, setFollowersCount] = useState(0)
+    const [userInterests, setUserInterests] = useState([])
     const [changePassword, setChangePassword] = useState(false)
     const [currentPassword, setCurrentPassword] = useState("")
     const [newPassword, setNewPassword] = useState("")
@@ -34,6 +36,8 @@ const Profile = (props) => {
     const [showNewPassword, setShowNewPassword] = useState(false)
     const [changingPassword, setChangingPassword] = useState(false)
 
+    const [showNewInterest, setShowNewInterest] = useState(false)
+    const [newInterest, setNewInterest] = useState("")
     const params = useParams()
     const fetchUserData = async () => {
         setApiStatus(API_STATUSES.loading)
@@ -51,7 +55,7 @@ const Profile = (props) => {
             setApiStatus(API_STATUSES.success)
             setProfile(response.data.userProfile)
             setFollowersCount(response.data.followersCount)
-            console.log(response)
+            setUserInterests(response.data.userInterests)
         }
         catch (error) {
             setApiStatus(API_STATUSES.failure)
@@ -110,6 +114,79 @@ const Profile = (props) => {
 
     }
 
+    const fetchInterests = async () => {
+        try {
+            const accessToken = Cookies.get("access-token")
+
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/profile/interests/mine`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            })
+
+            setUserInterests(response.data.userInterests)
+        }
+        catch (error) {
+            toast.error("unable to update interests", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored"
+            })
+        }
+    }
+
+    const deleteOrAddInterest = async (e) => {
+        e.preventDefault()
+        const accessToken = Cookies.get("access-token")
+        console.log(e.target)
+
+        try {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/profile/add-delete-interest`,
+                {
+                    interestValue: e.target.name === "addingForm" ? newInterest : e.target.name
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`
+                    }
+                })
+
+            toast.success(response.data, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored"
+            });
+            setNewInterest("")
+            fetchInterests()
+
+        } catch (error) {
+            console.log(error)
+            toast.error("try again", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored"
+            });
+        }
+
+        setShowNewInterest(false)
+
+    }
+
     const displayLoadingView = () => (
         <div className='h-100 w-100 d-flex justify-content-center align-items-center mt-5' >
             <MoonLoader color="#36d7b7" />
@@ -121,6 +198,36 @@ const Profile = (props) => {
             <h1 >unable to display profile please try again later</h1>
         </div>
     )
+
+    const addNewInterest = () => {
+        return (
+            <Modal
+                show={showNewInterest}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Header >
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        Add New Interest
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <form name="addingForm" onSubmit={deleteOrAddInterest}>
+                        <input type='text' value={newInterest} onChange={(e) => { setNewInterest(e.target.value) }} placeholder='Enter new interest' className='social-media-links-container' style={{ width: "100%" }} />
+
+                        <hr />
+                        <div className='d-flex justify-content-between'>
+                            <Button type='button' onClick={() => { setShowNewInterest(false) }}>cancel</Button>
+                            <Button type="submit" className='btn btn-success'>Submit</Button>
+                        </div>
+
+                    </form>
+                </Modal.Body>
+
+            </Modal>
+        )
+    }
 
     const displayPasswordField = () => {
         return (
@@ -278,7 +385,6 @@ const Profile = (props) => {
                             </div>
                         </div>
 
-
                     </div>
 
                     <hr className='hr' />
@@ -316,6 +422,34 @@ const Profile = (props) => {
                     <hr className='hr' />
 
                     {currUsername === username && displayPasswordField()}
+
+                    <hr className='hr' />
+                    <div  >
+                        <div className='d-flex justify-content-between'>
+                            <h1 className='profile-headings'>Interests</h1>
+                            {currUsername === username && <button type='button' className='btn btn-success' onClick={() => { setShowNewInterest(!showNewInterest) }}>New Interest</button>}
+                        </div>
+                        {showNewInterest && addNewInterest()}
+
+                        <div className='container' >
+                            <div className="row ">
+                                <ul className='interest-container mt-4'>
+                                    {
+                                        userInterests.map((each) => (
+                                            <li key={each._id} className='interest-box'>
+                                                <span >{each.value}</span>
+                                                {currUsername === username && <button name={each.value} onClick={deleteOrAddInterest} className='delete-interest-button' > &#10060; </button>}
+                                            </li>
+                                        ))
+                                    }
+                                </ul>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
 
 
 

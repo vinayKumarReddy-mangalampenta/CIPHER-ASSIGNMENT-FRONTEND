@@ -67,3 +67,32 @@
     border-color: #7692c4;
     height: 6px;
 }
+
+.interest-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    list-style-type: none;
+    gap: 17px;
+}
+
+.interest-box {
+    width: max-content;
+    height: 40px;
+    background-color: rgb(236, 166, 14);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+    font-size: 20px;
+    font-weight: 500;
+    border-radius: 10px;
+    /* color: blue; */
+    text-transform: capitalize;
+}
+
+.delete-interest-button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
