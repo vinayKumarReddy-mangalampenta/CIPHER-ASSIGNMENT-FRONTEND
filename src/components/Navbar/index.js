@@ -17,17 +17,21 @@ const Navbar = () => {
 
     return (
         <div className='navbar-container d-flex align-items-center justify-content-between'>
-            <div className='d-flex'>
-                <img src='https://www.cipherschools.com/static/media/Cipherschools_icon@2x.3b571d743ffedc84d039.png' alt='cipher schools' className='nav-logo' />
-                <h2 className='ms-2'>CipherSchools</h2>
-            </div>
+            <a href='/' className='me-2 text-decoration-none'>
+                <div className='d-flex'>
+
+                    <img src='https://www.cipherschools.com/static/media/Cipherschools_icon@2x.3b571d743ffedc84d039.png' alt='cipher schools' className='nav-logo' />
+                    <h2 className='ms-2'>CipherSchools</h2>
+                </div>
+            </a>
+
+
 
             {
                 isCookieAvailable ?
                     <div >
-                        <a href='/' className='me-2 text-decoration-none'>{username}</a>
 
-                        <a href="/users/all" className='logout-button' >All Users</a>
+                        <a href="/users/all" className='' >All Users</a>
 
                         <button onClick={logoutUser} className='logout-button'> logout</button>
                     </div> :

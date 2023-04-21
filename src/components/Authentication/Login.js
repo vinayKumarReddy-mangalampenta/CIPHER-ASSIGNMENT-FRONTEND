@@ -115,7 +115,7 @@ const Login = () => {
 
                     <button className='google-login-button' type='button' onClick={(e) => alert("Google Auth need to be added")}>
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/706px-Google_%22G%22_Logo.svg.png" className='google-logo' alt='google' />
-                        <span >Sign in with Google</span>
+                        <span > Google SignIn</span>
                     </button>
                 </form>
 
