@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { AiOutlineEye } from "react-icons/ai"
 import { toast } from 'react-toastify'
 import axios from 'axios'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
 import './index.css'
@@ -18,7 +18,7 @@ const Register = () => {
     const [password, setPassword] = useState("")
     const [showPassword, setShowPassword] = useState(false)
     const [submitting, setSubmitting] = useState(false)
-
+    const navigate = useNavigate()
     const onFormSubmit = async (e) => {
         e.preventDefault()
         setSubmitting(true)
@@ -49,6 +49,7 @@ const Register = () => {
                 progress: undefined,
                 theme: "colored"
             });
+            navigate("/login")
         } catch (error) {
             toast.error(error.response.data, {
                 position: "top-right",
