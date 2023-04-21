@@ -3,7 +3,7 @@ import Cookies from 'js-cookie'
 import { useNavigate } from "react-router-dom"
 import axios from 'axios'
 import Navbar from '../Navbar'
-import Spinner from 'react-bootstrap/Spinner'
+import MoonLoader from "react-spinners/MoonLoader"
 import { toast } from "react-toastify"
 import './index.css'
 const API_STATUSES = {
@@ -82,7 +82,7 @@ const UpdateProfile = () => {
 
     const displayLoadingView = () => (
         <div className='h-100 w-100 d-flex justify-content-center align-items-center mt-5' >
-            <Spinner animation="border" />
+            <MoonLoader color="#36d7b7" />
         </div>
     )
 

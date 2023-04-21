@@ -4,7 +4,7 @@ import axios from 'axios'
 import Navbar from '../Navbar'
 import UserCard from './UserCard'
 
-import Spinner from 'react-bootstrap/Spinner'
+import MoonLoader from 'react-spinners/MoonLoader'
 import './index.css'
 
 const API_STATUSES = {
@@ -48,7 +48,7 @@ const AllUsers = () => {
 
     const displayLoadingView = () => (
         <div className='h-100 w-100 d-flex justify-content-center align-items-center mt-5' >
-            <Spinner animation="border" />
+            <MoonLoader color="#36d7b7" />
         </div>
     )
 

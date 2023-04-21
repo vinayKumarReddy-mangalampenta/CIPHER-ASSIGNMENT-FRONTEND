@@ -4,7 +4,8 @@ import { BsGlobe, BsInstagram, BsTwitter, BsFacebook, BsGithub } from "react-ico
 import { toast } from "react-toastify"
 import Navbar from '../Navbar'
 import axios from 'axios'
-import Spinner from 'react-bootstrap/spinner'
+
+import MoonLoader from "react-spinners/MoonLoader"
 import Cookies from 'js-cookie'
 import "./index.css"
 
@@ -111,7 +112,7 @@ const Profile = (props) => {
 
     const displayLoadingView = () => (
         <div className='h-100 w-100 d-flex justify-content-center align-items-center mt-5' >
-            <Spinner animation="border" />
+            <MoonLoader color="#36d7b7" />
         </div>
     )
 
