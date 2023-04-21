@@ -9,6 +9,7 @@ import Profile from './components/Profile';
 import ProtectedRoute from './components/ProtectedRoute';
 import AllUsers from './components/AllUsers';
 import UpdateProfile from './components/UpdateProfile';
+import MyFollowers from './components/FollowersList';
 
 function App() {
   return (
@@ -36,6 +37,13 @@ function App() {
             exact path="/users/all" element={
               <ProtectedRoute >
                 <AllUsers />
+              </ProtectedRoute>
+            } >
+          </Route>
+          <Route
+            exact path="/followers/:username" element={
+              <ProtectedRoute >
+                <MyFollowers />
               </ProtectedRoute>
             } >
           </Route>

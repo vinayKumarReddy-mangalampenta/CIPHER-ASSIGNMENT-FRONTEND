@@ -187,7 +187,9 @@ const Profile = (props) => {
                         <h2 className='mb-1' >{firstName + " " + lastName}</h2>
                         <span className='d-block' >{email}</span>
                     </div>
-                    <span ><b >{followersCount} followers</b></span>
+                    <a href={`/followers/${username}`}>
+                        <span ><b >{followersCount} followers</b></span>
+                    </a>
                 </div>
 
 

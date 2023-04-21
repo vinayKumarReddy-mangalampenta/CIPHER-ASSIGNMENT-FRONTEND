@@ -25,6 +25,8 @@
     margin-left: 4px;
 }
 
+
+
 .update-form {
     width: 98%;
     display: flex;
@@ -37,7 +39,6 @@
     display: flex;
     flex-direction: column;
     max-width: 600px;
-
     width: 100%;
 }
 

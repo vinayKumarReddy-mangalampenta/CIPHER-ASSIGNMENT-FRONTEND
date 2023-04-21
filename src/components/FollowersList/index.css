@@ -1,0 +1,11 @@
+.followers-underline {
+    border-top: 3px solid #000;
+    width: 75%;
+    margin-left: 4px;
+}
+
+.my-followers-heading {
+    width: max-content;
+    margin: auto;
+    margin-top: 15px;
+}
