@@ -58,6 +58,11 @@
     padding: 0 5px;
 }
 
+
+.update-field-container>textarea {
+    height: 100px;
+}
+
 .update-submit-button {
     max-width: 600px;
     font-size: 22px;

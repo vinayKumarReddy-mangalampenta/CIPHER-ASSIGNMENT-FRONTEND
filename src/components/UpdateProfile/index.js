@@ -3,6 +3,7 @@ import Cookies from 'js-cookie'
 import { useNavigate } from "react-router-dom"
 import axios from 'axios'
 import Navbar from '../Navbar'
+import Spinner from 'react-bootstrap/Spinner'
 import { toast } from "react-toastify"
 import './index.css'
 const API_STATUSES = {
@@ -21,7 +22,7 @@ const UpdateProfile = () => {
         try {
             const accessToken = Cookies.get("access-token")
             const user = Cookies.get("username")
-            const response = await axios.get(`${process.env.API_URL}/profile/${user}`, {
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/profile/${user}`, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }
@@ -48,7 +49,7 @@ const UpdateProfile = () => {
         const accessToken = Cookies.get("access-token")
 
         try {
-            const response = await axios.put(`${process.env.API_URL}/profile/update`, {
+            const response = await axios.put(`${process.env.REACT_APP_API_URL}/profile/update`, {
                 profileFields: profile
             }, {
                 headers: {
@@ -80,8 +81,8 @@ const UpdateProfile = () => {
     }
 
     const displayLoadingView = () => (
-        <div >
-            <h1 >Loading........!</h1>
+        <div className='h-100 w-100 d-flex justify-content-center align-items-center mt-5' >
+            <Spinner animation="border" />
         </div>
     )
 

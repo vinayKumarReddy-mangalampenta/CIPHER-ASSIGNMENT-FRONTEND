@@ -11,7 +11,7 @@ import Cookies from "js-cookie"
 import { Navigate } from 'react-router-dom';
 
 const Login = () => {
-    const [email, setEmail] = useState("")
+    const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [showPassword, setShowPassword] = useState(false)
 
@@ -21,10 +21,10 @@ const Login = () => {
         e.preventDefault()
         setSubmitting(true)
         try {
-            const response = await axios.post(`${process.env.API_URL}/Auth/login`,
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/Auth/login`,
                 {
                     password,
-                    email,
+                    username,
                 },
                 {
                     headers: {
@@ -65,16 +65,16 @@ const Login = () => {
     }
 
     const isTokenAvailable = Cookies.get("access-token")
-    const username = Cookies.get("username")
+    const currUsername = Cookies.get("username")
 
-    if (isTokenAvailable !== undefined && username !== undefined) {
+    if (isTokenAvailable !== undefined && currUsername !== undefined) {
         return <Navigate to="/" replace />
     }
 
     return (
         <div className="login-container">
             <Navbar />
-            <div className='auth-container d-flex flex-column'>
+            <div className='auth-container mt-4 d-flex flex-column'>
                 <h1 >Sign In</h1>
                 <form className='d-flex flex-column align-items-center auth-form' onSubmit={onFormSubmit}>
                     <div className='d-flex'>
@@ -85,7 +85,7 @@ const Login = () => {
                     <span className='auth-hint mb-3'>Please provide your email and password to signin</span>
 
                     <div className='auth-input-container'>
-                        <input type='text' className='auth-input-field' placeholder='Email Id' required value={email} onChange={(e) => { setEmail(e.target.value) }} />
+                        <input type='text' className='auth-input-field' placeholder='Username' required value={username} onChange={(e) => { setUsername(e.target.value) }} />
                     </div>
 
                     <div className='auth-input-container d-flex align-items-center'>

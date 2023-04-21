@@ -4,7 +4,7 @@ import axios from 'axios'
 import Navbar from '../Navbar'
 import UserCard from './UserCard'
 
-
+import Spinner from 'react-bootstrap/Spinner'
 import './index.css'
 
 const API_STATUSES = {
@@ -21,7 +21,7 @@ const AllUsers = () => {
     const fetchUsersList = async () => {
         setApiStatus(API_STATUSES.loading)
         try {
-            const response = await axios.get(`${process.env.API_URL}/profile/users/all`, {
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/profile/users/all`, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }
@@ -47,8 +47,8 @@ const AllUsers = () => {
     }, [])
 
     const displayLoadingView = () => (
-        <div >
-            <h1 >Loading........!</h1>
+        <div className='h-100 w-100 d-flex justify-content-center align-items-center mt-5' >
+            <Spinner animation="border" />
         </div>
     )
 

@@ -4,6 +4,7 @@ import { BsGlobe, BsInstagram, BsTwitter, BsFacebook, BsGithub } from "react-ico
 import { toast } from "react-toastify"
 import Navbar from '../Navbar'
 import axios from 'axios'
+import Spinner from 'react-bootstrap/spinner'
 import Cookies from 'js-cookie'
 import "./index.css"
 
@@ -40,7 +41,7 @@ const Profile = (props) => {
             const username = Cookies.get("username")
 
             let user = params.user || username
-            const response = await axios.get(`${process.env.API_URL}/profile/${user}`, {
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/profile/${user}`, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }
@@ -68,7 +69,7 @@ const Profile = (props) => {
         const accessToken = Cookies.get("access-token")
         setChangingPassword(true)
         try {
-            await axios.put(`${process.env.API_URL}/auth/change-password`,
+            await axios.put(`${process.env.REACT_APP_API_URL}/auth/change-password`,
                 {
                     currentPassword,
                     newPassword,
@@ -109,8 +110,8 @@ const Profile = (props) => {
     }
 
     const displayLoadingView = () => (
-        <div >
-            <h1 >Loading........!</h1>
+        <div className='h-100 w-100 d-flex justify-content-center align-items-center mt-5' >
+            <Spinner animation="border" />
         </div>
     )
 
@@ -181,7 +182,7 @@ const Profile = (props) => {
                 <div className='intro-container d-flex  align-items-center justify-content-between px-3'>
                     <img src="https://img.freepik.com/free-icon/user_318-159711.jpg" className='user-dp' alt={username} />
                     <div className='intro-details me-auto ms-2'>
-                        <span style={{ fontSize: "23px" }} >Hello,</span>
+                        {currUsername === username && <span style={{ fontSize: "23px" }} >Hello,</span>}
                         <h2 className='mb-1' >{firstName + " " + lastName}</h2>
                         <span className='d-block' >{email}</span>
                     </div>
@@ -202,7 +203,11 @@ const Profile = (props) => {
                             </a>}
                         </div>
                         <div className='about-me-container' >
-                            <p >{aboutMe === "" ? "write about your self .....!" : aboutMe}</p>
+                            <p >{
+                                aboutMe === "" ?
+                                    currUsername === username ? "write about your self .....!" : `I am ${firstName}`
+                                    :
+                                    aboutMe}</p>
                         </div>
                     </div>
 
@@ -334,7 +339,7 @@ const Profile = (props) => {
 
 
     return (
-        <div>
+        <div style={{ minHeight: "100vh" }}>
             <Navbar />
             {
                 renderProfile()

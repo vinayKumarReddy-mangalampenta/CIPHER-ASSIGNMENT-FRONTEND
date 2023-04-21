@@ -17,7 +17,7 @@ const UserCard = (props) => {
         const accessToken = Cookies.get("access-token")
 
         try {
-            const response = await axios.post(`${process.env.API_URL}/profile/follow-unfollow-user`,
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/profile/follow-unfollow-user`,
                 {
                     followingId: id
                 },

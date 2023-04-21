@@ -23,7 +23,7 @@ const Register = () => {
         e.preventDefault()
         setSubmitting(true)
         try {
-            await axios.post(`${process.env.API_URL}/Auth/register`,
+            await axios.post(`${process.env.REACT_APP_API_URL}/Auth/register`,
                 {
                     password,
                     email,
@@ -75,7 +75,7 @@ const Register = () => {
     return (
         <div className="login-container">
             <Navbar />
-            <div className='auth-container d-flex flex-column'>
+            <div className='auth-container mt-4 d-flex flex-column'>
                 <h1 >Sign up</h1>
                 <form className='d-flex flex-column align-items-center auth-form' onSubmit={onFormSubmit}>
                     <div className='d-flex'>
